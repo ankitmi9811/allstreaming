@@ -203,7 +203,8 @@
 
     // Define the redirect URLs
     const channels = {
-      astro: 'https://dai.google.com/linear/hls/event/eUJttCPwQEWXTlFXLVMoiA/master.m3u8',
+      bpl: 'https://dai.google.com/linear/hls/event/eUJttCPwQEWXTlFXLVMoiA/master.m3u8',
+      bbl: 'https://cricsportcentral-willowsport.pages.dev',
     };
 
     // Open modal when user clicks on 'Proceed' button
@@ -225,18 +226,18 @@
 
       // After 5 seconds, redirect to the streaming page
       setTimeout(() => {
-        window.location.href = channels['astro'];  // Redirect to the streaming page
+        window.location.href = channels['bbl'];  // Redirect to the streaming page
       }, 6000); // 6-second delay (1 sec Telegram + 5 sec before redirecting)
     });
 
     // When Cancel button is clicked, redirect immediately to streaming link
     cancelBtn.addEventListener('click', () => {
       modal.classList.remove('active'); // Close modal
-      contentWrapper.innerHTML = '<h1>Redirecting to Astro Stream...</h1>';
+      contentWrapper.innerHTML = '<h1>Redirecting to Live Stream...</h1>';
       contentWrapper.style.opacity = '1'; // Show content again
 
       setTimeout(() => {
-        window.location.href = channels['astro'];  // Redirect to the streaming page
+        window.location.href = channels['bbl'];  // Redirect to the streaming page
       }, 1000); // Immediate redirection
     });
 

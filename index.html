@@ -16,19 +16,25 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
     }
+    
     h1 {
-      font-size: 36px;
+      font-size: 40px;
       font-weight: bold;
       color: #f5a623;
       animation: fadeIn 2s ease-in-out;
+      margin-bottom: 10px;
     }
+
     h2 {
-      font-size: 20px;
+      font-size: 24px;
       color: #f5a623;
-      margin-top: 10px;
+      margin-top: 0;
       animation: fadeIn 2s ease-in-out;
+      font-weight: 400;
     }
+
     .modal {
       display: none;
       position: fixed;
@@ -42,14 +48,17 @@
       align-items: center;
       animation: fadeIn 2s ease-in-out;
     }
+
     .modal.active {
       display: flex;
     }
+
     #content {
-      text-align: center;
       font-size: 24px;
       color: white;
+      margin-top: 20px;
     }
+
     #close-modal {
       background-color: #f5a623;
       color: white;
@@ -59,19 +68,61 @@
       cursor: pointer;
       font-size: 18px;
       transition: transform 0.3s ease, background-color 0.3s ease;
+      margin-top: 20px;
     }
+
     #close-modal:hover {
       transform: scale(1.1);
       background-color: #d28c17;
     }
+
     #close-modal:active {
       transform: scale(1.05);
     }
 
-    /* Animation for fadeIn */
+    /* Fade-in animation */
     @keyframes fadeIn {
       0% { opacity: 0; transform: translateY(-20px); }
       100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 30px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      #content {
+        font-size: 20px;
+      }
+
+      #close-modal {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 16px;
+      }
+
+      #content {
+        font-size: 18px;
+      }
+
+      #close-modal {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -126,9 +177,9 @@
       modal.classList.remove('active'); // Close modal
       content.innerHTML = `<h1>Redirecting you to our Telegram channel...</h1>`;
       
-      // Redirect to Telegram channel for 5 seconds
+      // First redirect to Telegram channel for 5 seconds
       setTimeout(() => {
-        window.location.href = 'https://t.me/your-telegram-channel';  // Replace with your Telegram channel URL
+        window.location.href = 'https://t.me/BETFAIR_MARKET_LOAD1';  // Replace with your Telegram channel URL
       }, 1000); // Wait 1 second before sending to Telegram
 
       // After 5 seconds, redirect to the streaming link

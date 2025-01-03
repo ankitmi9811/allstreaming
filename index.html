@@ -5,38 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Custom Streaming Links</title>
   <style>
+    /* General styles */
     body {
       background-color: #121212;
       font-family: 'Roboto', sans-serif;
-      color: white;
       margin: 0;
       padding: 0;
-      height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
     }
 
+    /* Center the content */
+    .content-wrapper {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    /* Landing page title */
     h1 {
-      font-size: 50px;
+      font-size: 45px;
       font-weight: 700;
       color: #FF6F61;
       text-transform: uppercase;
+      margin: 20px 0;
+      letter-spacing: 3px;
       animation: fadeIn 1.5s ease-out;
-      margin-bottom: 10px;
     }
 
     h2 {
-      font-size: 28px;
-      color: #FDCB82;
-      margin-top: 0;
+      font-size: 24px;
       font-weight: 400;
+      color: #FDCB82;
       letter-spacing: 2px;
+      margin: 0;
       animation: fadeIn 2s ease-out;
     }
 
+    /* Button style */
+    .button {
+      background: linear-gradient(45deg, #FF6F61, #FDCB82);
+      padding: 15px 50px;
+      font-size: 18px;
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(255, 111, 97, 0.4);
+      transition: all 0.3s ease-in-out;
+      margin-top: 40px;
+      outline: none;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 50px rgba(255, 111, 97, 0.7);
+    }
+
+    .button:active {
+      transform: scale(1.02);
+    }
+
+    /* Modal for button */
     .modal {
       display: none;
       position: fixed;
@@ -44,94 +83,94 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      color: white;
+      background: rgba(0, 0, 0, 0.8);
       justify-content: center;
       align-items: center;
-      animation: fadeIn 2s ease-out;
+      z-index: 1000;
+      transition: all 0.5s ease;
     }
 
     .modal.active {
       display: flex;
     }
 
-    #content {
-      font-size: 24px;
-      color: white;
-      margin-top: 20px;
-      font-weight: 500;
-      animation: slideIn 1s ease-out;
+    .modal-content {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
     }
 
-    #close-modal, #cancel-modal {
+    .modal-content p {
+      font-size: 18px;
+      color: #FDCB82;
+      font-weight: 500;
+    }
+
+    /* Button styles inside modal */
+    .modal-button {
       background-color: #FF6F61;
+      padding: 10px 25px;
+      font-size: 18px;
       color: white;
-      padding: 15px 40px;
+      font-weight: bold;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      font-size: 18px;
+      margin-top: 20px;
+      box-shadow: 0 5px 15px rgba(255, 111, 97, 0.4);
       transition: all 0.3s ease;
-      margin-top: 30px;
-      box-shadow: 0 4px 15px rgba(255, 111, 97, 0.7);
     }
 
-    #close-modal:hover, #cancel-modal:hover {
+    .modal-button:hover {
       transform: scale(1.1);
-      background-color: #FDCB82;
-      box-shadow: 0 6px 25px rgba(255, 111, 97, 0.9);
+      box-shadow: 0 15px 30px rgba(255, 111, 97, 0.6);
     }
 
-    #close-modal:active, #cancel-modal:active {
+    .modal-button:active {
       transform: scale(1.05);
     }
 
-    /* Subtle fade-in and slide-in animations */
+    /* Animation for fade-in effect */
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(-20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Mobile responsiveness */
     @media (max-width: 768px) {
       h1 {
-        font-size: 40px;
+        font-size: 35px;
       }
 
       h2 {
-        font-size: 24px;
+        font-size: 18px;
       }
 
-      #content {
-        font-size: 22px;
-      }
-
-      #close-modal, #cancel-modal {
-        padding: 12px 30px;
+      .button {
+        padding: 12px 40px;
         font-size: 16px;
       }
     }
 
     @media (max-width: 480px) {
       h1 {
-        font-size: 30px;
+        font-size: 28px;
       }
 
       h2 {
-        font-size: 20px;
+        font-size: 16px;
       }
 
-      #content {
-        font-size: 18px;
-      }
-
-      #close-modal, #cancel-modal {
-        padding: 10px 25px;
+      .button {
+        padding: 10px 30px;
         font-size: 14px;
       }
     }
@@ -139,78 +178,76 @@
 </head>
 <body>
 
-  <h1>BETFAIR MARKET LOAD</h1>
-  <h2>All Live Streams Available</h2>
-
-  <div id="content">
-    <h1>Loading...</h1>
+  <!-- Wrapper for content (initially hidden) -->
+  <div class="content-wrapper" id="contentWrapper">
+    <h1>BETFAIR MARKET LOAD</h1>
+    <h2>All Live Streams Available</h2>
+    <button class="button" id="openModalBtn">Proceed</button>
   </div>
 
+  <!-- Modal for action (OK/Cancel) -->
   <div id="modal" class="modal">
-    <div>
-      <p style="font-size: 22px;">Join our Telegram channel for updates!</p>
-      <button id="close-modal">OK</button>
-      <button id="cancel-modal">Cancel</button>
+    <div class="modal-content">
+      <p>Join our Telegram channel for updates!</p>
+      <button class="modal-button" id="okBtn">OK</button>
+      <button class="modal-button" id="cancelBtn">Cancel</button>
     </div>
   </div>
 
   <script>
-    // Get query parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const channelId = urlParams.get('id') || urlParams.get('ch');
-    console.log('Channel ID:', channelId);  // Log to check if we're getting the correct parameter
+    // Fetching necessary elements
+    const contentWrapper = document.getElementById('contentWrapper');
+    const modal = document.getElementById('modal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const okBtn = document.getElementById('okBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
 
-    // Define links
+    // Define the redirect URLs
     const channels = {
       astro: 'https://dai.google.com/linear/hls/event/eUJttCPwQEWXTlFXLVMoiA/master.m3u8',
-      skycric: 'https://your-link.com/skycric-stream',
-      'fox-501': 'https://your-link.com/fox-stream',
-      willow: 'https://your-link.com/willow-stream',
-      Tntsport1: 'https://your-link.com/tnt1-stream',
     };
 
-    // Display content or redirect
-    const content = document.getElementById('content');
-    if (channels[channelId]) {
-      content.innerHTML = `<h1>To watch ${channelId} stream, please click OK</h1>`;
-    } else {
-      content.innerHTML = '<h1>Channel not found</h1>';
-    }
-
-    // Modal behavior
-    const modal = document.getElementById('modal');
-    const closeModal = document.getElementById('close-modal');
-    const cancelModal = document.getElementById('cancel-modal');
-    
-    // Open modal
-    modal.classList.add('active');
-
-    // When OK button is clicked
-    closeModal.addEventListener('click', () => {
-      modal.classList.remove('active'); // Close modal
-      content.innerHTML = `<h1>Redirecting you to our Telegram channel...</h1>`;
-      
-      // First redirect to Telegram channel for 5 seconds
-      setTimeout(() => {
-        window.location.href = 'https://t.me/betfair_market_load1';  // Replace with your Telegram channel URL
-      }, 1000); // Wait 1 second before sending to Telegram
-
-      // After 5 seconds, redirect to the streaming link
-      setTimeout(() => {
-        window.location.href = channels[channelId];  // Redirect to streaming page
-      }, 6000); // Wait 6 seconds (5 seconds on Telegram + 1 second delay)
+    // Open modal when user clicks on 'Proceed' button
+    openModalBtn.addEventListener('click', () => {
+      modal.classList.add('active'); // Show modal
+      contentWrapper.style.opacity = '0'; // Hide the main content
     });
 
-    // When Cancel button is clicked
-    cancelModal.addEventListener('click', () => {
+    // When OK button is clicked, show Telegram and then redirect to stream
+    okBtn.addEventListener('click', () => {
       modal.classList.remove('active'); // Close modal
-      content.innerHTML = `<h1>Redirecting to ${channelId} stream...</h1>`;
-      
-      // Immediately redirect to the Astro streaming page
+      contentWrapper.innerHTML = '<h1>Redirecting to Telegram...</h1>';
+      contentWrapper.style.opacity = '1'; // Show content again
+
+      // Redirect to Telegram channel first
       setTimeout(() => {
-        window.location.href = channels[channelId];
-      }, 1000); // 1 second delay before redirecting
+        window.location.href = 'https://t.me/betfair_market_load1';  // Replace with your actual Telegram channel
+      }, 1000);
+
+      // After 5 seconds, redirect to the streaming page
+      setTimeout(() => {
+        window.location.href = channels['astro'];  // Redirect to the streaming page
+      }, 6000); // 6-second delay (1 sec Telegram + 5 sec before redirecting)
     });
+
+    // When Cancel button is clicked, redirect immediately to streaming link
+    cancelBtn.addEventListener('click', () => {
+      modal.classList.remove('active'); // Close modal
+      contentWrapper.innerHTML = '<h1>Redirecting to Astro Stream...</h1>';
+      contentWrapper.style.opacity = '1'; // Show content again
+
+      setTimeout(() => {
+        window.location.href = channels['astro'];  // Redirect to the streaming page
+      }, 1000); // Immediate redirection
+    });
+
+    // Display content wrapper with delay for a smooth transition
+    window.onload = () => {
+      setTimeout(() => {
+        contentWrapper.style.opacity = '1'; // Make content visible after page load
+      }, 500); // 500ms delay to allow for fade-in effect
+    };
   </script>
+
 </body>
 </html>

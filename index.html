@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Streaming Links</title>
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <h1>Loading...</h1>
+  </div>
+
+  <div id="modal" class="modal">
+    <div>
+      <p>Join our Telegram channel for updates!</p>
+      <button id="close-modal">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Get query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const channelId = urlParams.get('id') || urlParams.get('ch');
+
+    // Define links
+    const channels = {
+      astro: 'https://your-link.com/astro-stream',
+      skycric: 'https://your-link.com/skycric-stream',
+      'fox-501': 'https://your-link.com/fox-stream',
+      willow: 'https://your-link.com/willow-stream',
+      Tntsport1: 'https://your-link.com/tnt1-stream',
+    };
+
+    // Display content or redirect
+    const content = document.getElementById('content');
+    if (channels[channelId]) {
+      content.innerHTML = `<h1>Redirecting to ${channelId}...</h1>`;
+      setTimeout(() => {
+        window.location.href = channels[channelId];
+      }, 3000); // Redirect after 3 seconds
+    } else {
+      content.innerHTML = '<h1>Channel not found</h1>';
+    }
+
+    // Modal behavior
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('close-modal');
+    modal.classList.add('active');
+    closeModal.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+  </script>
+</body>
+</html>

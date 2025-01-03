@@ -20,9 +20,22 @@
     .modal.active {
       display: flex;
     }
+    #content {
+      text-align: center;
+      font-size: 24px;
+      color: white;
+    }
+    #close-modal {
+      background-color: #f44336;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
-<body>
+<body style="background-color: black;">
+
   <div id="content">
     <h1>Loading...</h1>
   </div>
@@ -38,6 +51,7 @@
     // Get query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const channelId = urlParams.get('id') || urlParams.get('ch');
+    console.log('Channel ID:', channelId);  // Log to check if we're getting the correct parameter
 
     // Define links
     const channels = {
@@ -51,6 +65,7 @@
     // Display content or redirect
     const content = document.getElementById('content');
     if (channels[channelId]) {
+      console.log('Redirecting to:', channels[channelId]); // Log the link to check it's correct
       content.innerHTML = `<h1>Redirecting to ${channelId}...</h1>`;
       setTimeout(() => {
         window.location.href = channels[channelId];
@@ -64,6 +79,7 @@
     const closeModal = document.getElementById('close-modal');
     modal.classList.add('active');
     closeModal.addEventListener('click', () => {
+      console.log('Modal closed');  // Log to check if it's being triggered
       modal.classList.remove('active');
     });
   </script>

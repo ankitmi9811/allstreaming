@@ -18,7 +18,7 @@
       align-items: center;
       text-align: center;
     }
-    
+
     h1 {
       font-size: 40px;
       font-weight: bold;
@@ -59,7 +59,7 @@
       margin-top: 20px;
     }
 
-    #close-modal {
+    #close-modal, #cancel-modal {
       background-color: #f5a623;
       color: white;
       padding: 12px 30px;
@@ -71,12 +71,12 @@
       margin-top: 20px;
     }
 
-    #close-modal:hover {
+    #close-modal:hover, #cancel-modal:hover {
       transform: scale(1.1);
       background-color: #d28c17;
     }
 
-    #close-modal:active {
+    #close-modal:active, #cancel-modal:active {
       transform: scale(1.05);
     }
 
@@ -100,7 +100,7 @@
         font-size: 20px;
       }
 
-      #close-modal {
+      #close-modal, #cancel-modal {
         padding: 10px 20px;
         font-size: 16px;
       }
@@ -119,7 +119,7 @@
         font-size: 18px;
       }
 
-      #close-modal {
+      #close-modal, #cancel-modal {
         padding: 8px 16px;
         font-size: 14px;
       }
@@ -139,6 +139,7 @@
     <div>
       <p>Join our Telegram channel for updates!</p>
       <button id="close-modal">OK</button>
+      <button id="cancel-modal">Cancel</button>
     </div>
   </div>
 
@@ -168,6 +169,7 @@
     // Modal behavior
     const modal = document.getElementById('modal');
     const closeModal = document.getElementById('close-modal');
+    const cancelModal = document.getElementById('cancel-modal');
     
     // Open modal
     modal.classList.add('active');
@@ -179,13 +181,24 @@
       
       // First redirect to Telegram channel for 5 seconds
       setTimeout(() => {
-        window.location.href = 'https://t.me/BETFAIR_MARKET_LOAD1';  // Replace with your Telegram channel URL
+        window.location.href = 'https://t.me/your-telegram-channel';  // Replace with your Telegram channel URL
       }, 1000); // Wait 1 second before sending to Telegram
 
       // After 5 seconds, redirect to the streaming link
       setTimeout(() => {
         window.location.href = channels[channelId];  // Redirect to streaming page
       }, 6000); // Wait 6 seconds (5 seconds on Telegram + 1 second delay)
+    });
+
+    // When Cancel button is clicked
+    cancelModal.addEventListener('click', () => {
+      modal.classList.remove('active'); // Close modal
+      content.innerHTML = `<h1>Redirecting to ${channelId} stream...</h1>`;
+      
+      // Immediately redirect to the Astro streaming page
+      setTimeout(() => {
+        window.location.href = channels[channelId];
+      }, 1000); // 1 second delay before redirecting
     });
   </script>
 </body>

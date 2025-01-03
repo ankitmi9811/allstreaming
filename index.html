@@ -19,18 +19,19 @@
       overflow: hidden;
     }
 
-    /* Center the content */
+    /* Content wrapper style */
     .content-wrapper {
       text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      opacity: 0;
+      opacity: 1;
       transition: opacity 1s ease;
+      position: relative;
     }
 
-    /* Landing page title */
+    /* Heading styles */
     h1 {
       font-size: 45px;
       font-weight: 700;
@@ -38,7 +39,6 @@
       text-transform: uppercase;
       margin: 20px 0;
       letter-spacing: 3px;
-      animation: fadeIn 1.5s ease-out;
     }
 
     h2 {
@@ -47,7 +47,6 @@
       color: #FDCB82;
       letter-spacing: 2px;
       margin: 0;
-      animation: fadeIn 2s ease-out;
     }
 
     /* Button style */
@@ -75,61 +74,29 @@
       transform: scale(1.02);
     }
 
-    /* Modal for button */
-    .modal {
-      display: none;
+    /* Style for iframe (top-left corner, small size) */
+    iframe {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      transition: all 0.5s ease;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.85);
+      top: 10px;
+      left: 10px;
+      width: 300px;
+      height: 200px;
+      border: 2px solid white;
       border-radius: 8px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      background-color: black;
+      z-index: 10;
+      display: none; /* Initially hidden */
     }
 
-    .modal-content p {
-      font-size: 18px;
-      color: #FDCB82;
-      font-weight: 500;
-    }
-
-    /* Button styles inside modal */
-    .modal-button {
-      background-color: #FF6F61;
-      padding: 10px 25px;
-      font-size: 18px;
+    /* Text overlay on iframe */
+    .iframe-overlay {
+      position: fixed;
+      top: 20px;
+      left: 320px;
       color: white;
+      font-size: 18px;
       font-weight: bold;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      margin-top: 20px;
-      box-shadow: 0 5px 15px rgba(255, 111, 97, 0.4);
-      transition: all 0.3s ease;
-    }
-
-    .modal-button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 15px 30px rgba(255, 111, 97, 0.6);
-    }
-
-    .modal-button:active {
-      transform: scale(1.05);
+      z-index: 15;
     }
 
     /* Animation for fade-in effect */
@@ -158,6 +125,16 @@
         padding: 12px 40px;
         font-size: 16px;
       }
+
+      iframe {
+        width: 200px;
+        height: 150px;
+      }
+
+      .iframe-overlay {
+        font-size: 16px;
+        left: 220px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -173,14 +150,16 @@
         padding: 10px 30px;
         font-size: 14px;
       }
-    }
 
-    /* Style for iframe */
-    iframe {
-      width: 100%;
-      height: 500px;
-      border: none;
-      margin-top: 30px;
+      iframe {
+        width: 180px;
+        height: 130px;
+      }
+
+      .iframe-overlay {
+        font-size: 14px;
+        left: 200px;
+      }
     }
   </style>
 </head>
@@ -193,69 +172,31 @@
     <button class="button" id="openModalBtn">Proceed</button>
   </div>
 
-  <!-- Modal for action (OK/Cancel) -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <p>Join our Telegram channel for updates!</p>
-      <button class="modal-button" id="okBtn">OK</button>
-      <button class="modal-button" id="cancelBtn">Cancel</button>
-    </div>
-  </div>
-
   <!-- Embed the iframe here -->
-  <iframe id="iframe" style="display:none;"></iframe>
+  <iframe id="iframe"></iframe>
+
+  <!-- Text overlay on iframe -->
+  <div class="iframe-overlay" id="iframeText">Streaming continues...</div>
 
   <script>
     // Fetching necessary elements
     const contentWrapper = document.getElementById('contentWrapper');
-    const modal = document.getElementById('modal');
     const openModalBtn = document.getElementById('openModalBtn');
-    const okBtn = document.getElementById('okBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
     const iframe = document.getElementById('iframe');
+    const iframeText = document.getElementById('iframeText');
 
     // Define the content for the iframe
     const iframeContent = '@betfair_market_load1';
 
     // Open modal when user clicks on 'Proceed' button
     openModalBtn.addEventListener('click', () => {
-      modal.classList.add('active'); // Show modal
-      contentWrapper.style.opacity = '0'; // Hide the main content
-    });
-
-    // When OK button is clicked, show Telegram and then redirect to stream
-    okBtn.addEventListener('click', () => {
-      modal.classList.remove('active'); // Close modal
-      contentWrapper.innerHTML = '<h1>Redirecting to Telegram...</h1>';
-      contentWrapper.style.opacity = '1'; // Show content again
-
       // Set iframe content to '@betfair_market_load1' and display it
       iframe.srcdoc = iframeContent; // Use srcdoc to set custom content inside iframe
       iframe.style.display = 'block'; // Show the iframe
 
-      // Redirect to Telegram channel first
-      setTimeout(() => {
-        window.location.href = 'https://t.me/betfair_market_load1';  // Replace with your actual Telegram channel
-      }, 1000);
+      // Display the overlay text
+      iframeText.style.display = 'block';
     });
-
-    // When Cancel button is clicked, show content in iframe
-    cancelBtn.addEventListener('click', () => {
-      modal.classList.remove('active'); // Close modal
-      contentWrapper.innerHTML = '<h1>Redirecting to Astro Stream...</h1>';
-      contentWrapper.style.opacity = '1'; // Show content again
-
-      // Set iframe content to '@betfair_market_load1' and display it
-      iframe.srcdoc = iframeContent; // Use srcdoc to set custom content inside iframe
-      iframe.style.display = 'block'; // Show the iframe
-    });
-
-    // Display content wrapper with delay for a smooth transition
-    window.onload = () => {
-      setTimeout(() => {
-        contentWrapper.style.opacity = '1'; // Make content visible after page load
-      }, 500); // 500ms delay to allow for fade-in effect
-    };
   </script>
 
 </body>
